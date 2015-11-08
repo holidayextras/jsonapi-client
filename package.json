@@ -1,0 +1,51 @@
+{
+  "name": "jsonapi-client",
+  "version": "0.0.0",
+  "description": "A clientside module designed to make it really easy to consume a json:api service.",
+  "keywords": [
+    "jsonapi",
+    "json:api",
+    "api"
+  ],
+  "main": "lib/Client.js",
+  "author": "Oliver Rumbelow",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/holidayextras/jsonapi-client.git"
+  },
+  "dependencies": {
+    "lodash": "3.10.0",
+    "promise": "7.0.4",
+    "superagent": "1.2.0"
+  },
+  "devDependencies": {
+    "blanket": "1.1.7",
+    "browserify": "12.0.1",
+    "coveralls": "2.11.2",
+    "eslint": "0.24.0",
+    "jsonapi-server": "0.11.0",
+    "mocha": "2.2.5",
+    "mocha-lcov-reporter": "0.0.2",
+    "plato": "1.5.0",
+    "uglifyjs": "2.4.10"
+  },
+  "scripts": {
+    "build": "./node_modules/browserify/bin/cmd.js lib/Client.js | ./node_modules/uglifyjs/bin/uglifyjs -cm > dist/jsonapi-client.min.js",
+    "test": "./node_modules/mocha/bin/mocha -R spec ./test/*.js",
+    "coveralls": "./node_modules/mocha/bin/mocha --require blanket --reporter mocha-lcov-reporter ./test/*.js | ./node_modules/coveralls/bin/coveralls.js",
+    "coverage": "./node_modules/mocha/bin/mocha --require blanket --reporter html-cov ./test/*.js > coverage.html",
+    "complexity": "./node_modules/plato/bin/plato -r -d complexity lib",
+    "lint": "./node_modules/.bin/eslint ./lib/* ./test/*.js --quiet && echo '✔ All good!'"
+  },
+  "config": {
+    "blanket": {
+      "pattern": "/jsonapi-client\/lib/",
+      "data-cover-never": [
+        "node_modules",
+        "test",
+        "example"
+      ]
+    }
+  }
+}
