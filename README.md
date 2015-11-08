@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/holidayextras/jsonapi-client/badge.svg?branch=master)](https://coveralls.io/r/holidayextras/jsonapi-client?branch=master)
+[![Coverage Status](https://coveralls.io/repos/holidayextras/jsonapi-client/badge.svg?branch=master&service=github)](https://coveralls.io/github/holidayextras/jsonapi-client?branch=master)
 [![Build Status](https://travis-ci.org/holidayextras/jsonapi-client.svg?branch=master)](https://travis-ci.org/holidayextras/jsonapi-client)
 [![Code Climate](https://codeclimate.com/github/holidayextras/jsonapi-client/badges/gpa.svg)](https://codeclimate.com/github/holidayextras/jsonapi-client)
 [![Dependencies Status](https://david-dm.org/holidayextras/jsonapi-client.svg)](https://david-dm.org/holidayextras/jsonapi-client)
