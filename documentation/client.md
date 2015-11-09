@@ -12,7 +12,7 @@
 1. To enable consumption of multiple JSON:API services.
 2. To be a factory for Resource objects.
   1. When creating new Resources.
-  2. When retrieving Resource from an API.
+  2. When retrieving Resources from an API.
 
 #### Getting Started
 

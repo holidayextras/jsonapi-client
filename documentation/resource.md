@@ -40,7 +40,7 @@ newPerson.sync(); // without a callback, it returns a promise
 
 ### Flattening a resource
 
-Calling `resourrce.toJSON()` will flatten and merge a Resources type+id, attributes and relations to give a clean view of the resource. Nested or known related resources will be excluded.
+Calling `resource.toJSON()` will flatten and merge a Resource's type+id, attributes and relations to give a clean view of the resource. Nested or known related resources will be excluded.
 
 ```javascript
 > photo.toJSON();
@@ -117,7 +117,7 @@ photo.fetch("photographer", function(err, person) {
 
 ### Changing resource relations
 
-A resources relations can be modified by calling `resource.relationships("relation-name")` and then calling `.add()`, `.remove()` or `.set()` to mutate the relation.
+A resource's relations can be modified by calling `resource.relationships("relation-name")` and then calling `.add()`, `.remove()` or `.set()` to mutate the relation.
 
 ```javascript
 person.relationships("photos").add(someResource) // synchronous
