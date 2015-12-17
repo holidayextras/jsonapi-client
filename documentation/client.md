@@ -3,6 +3,7 @@
 
 - [Purpose of the Client](client.md#Purpose of the Client)
 - [Getting Started](client.md#Getting Started)
+- [Authentication](client.md#Authentication)
 - [Creating a Resource](client.md#Creating a Resource)
 - [Finding Resources](client.md#Finding Resources)
 - [Getting a Resource](client.md#Getting a Resource)
@@ -36,6 +37,28 @@ var client = new JsonapiClient("http://localhost:16006/rest");
 ```
 
 Now we're good to go!
+
+#### Authentication
+
+jsonapi-server currently supports two basic forms of authentication - cookies and headers.
+
+Custom headers:
+```javascript
+var client = new JsonapiClient("http://localhost:16006/rest", {
+  header: {
+    myHeaderName: "my-header-value"
+  }
+});
+```
+
+Cookie:
+```javascript
+var client = new JsonapiClient("http://localhost:16006/rest", {
+  cookie: {
+    myCookieName: "my-cookie-value"
+  }
+});
+```
 
 #### Creating a Resource
 

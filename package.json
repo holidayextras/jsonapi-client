@@ -24,7 +24,7 @@
     "browserify": "12.0.1",
     "coveralls": "2.11.2",
     "eslint": "0.24.0",
-    "jsonapi-server": "0.11.0",
+    "jsonapi-server": "1.0.3",
     "mocha": "2.2.5",
     "mocha-lcov-reporter": "0.0.2",
     "plato": "1.5.0",
