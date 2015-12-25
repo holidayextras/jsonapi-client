@@ -5,9 +5,13 @@
 
 # jsonapi-client
 
-`jsonapi-client` is a module designed to make it really easy to consume a `json:api` service.
+A javascript module designed to make it really easy to consume a `json:api` service.
 
-This module is tested against the example JSON:API server in [jsonapi-server](https://github.com/holidayextras/jsonapi-server).
+### Motivation / Justification / Rationale
+
+Consuming a json:api service from within Javascript is a non-trivial affair. Setting up a transport mechanism, authentication, making requests to standardised HTTP routes, error handling, pagination and expanding an inclusion tree... All of these things represent barriers to consuming an API. This module takes away all the hassle and lets developers focus on interacting with a rich API without wasting developer time focusing on anything other than shipping valuable features.
+
+This module is tested against the example json:api server provided by  [jsonapi-server](https://github.com/holidayextras/jsonapi-server).
 
 ### Full documentation
 
@@ -20,8 +24,10 @@ This module is tested against the example JSON:API server in [jsonapi-server](ht
 #### Creating a new Client
 ```javascript
 var JsonapiClient = require("jsonapi-client");
-var client = new JsonapiClient({
-  url: "http://localhost:16006/rest"
+var client = new JsonapiClient("http://localhost:16006/rest", {
+  header: {
+    authToken: "2ad1d6f7-e1d0-480d-86b2-dfad8af4a5b3"
+  }
 });
 ```
 
