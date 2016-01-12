@@ -1,6 +1,6 @@
 {
   "name": "jsonapi-client",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A clientside module designed to make it really easy to consume a json:api service.",
   "keywords": [
     "jsonapi",
@@ -15,9 +15,9 @@
     "url": "https://github.com/holidayextras/jsonapi-client.git"
   },
   "dependencies": {
-    "lodash": "3.10.0",
-    "promise": "7.0.4",
-    "superagent": "1.2.0"
+    "lodash": "3.10.1",
+    "promise": "7.1.1",
+    "superagent": "1.6.1"
   },
   "devDependencies": {
     "blanket": "1.1.7",

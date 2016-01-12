@@ -48,6 +48,13 @@ describe("Testing jsonapi-client", function() {
       assert.throws(function() { person.relationships("photos"); });
     });
 
+    it("throws an error when adding a non-resource", function() {
+      var somePhoto = person.photos[0];
+      assert.throws(function() {
+        somePhoto.relationships("photographer").add("foobar");
+      }, /Expected Resource, got String/);
+    });
+
     it("removing the linked resource works fine", function(done) {
       var somePhoto = person.photos[0];
       assert.equal(somePhoto, photo);
