@@ -1,12 +1,12 @@
 
 ## Using the Client
 
-- [Purpose of the Client](client.md#Purpose of the Client)
-- [Getting Started](client.md#Getting Started)
-- [Authentication](client.md#Authentication)
-- [Creating a Resource](client.md#Creating a Resource)
-- [Finding Resources](client.md#Finding Resources)
-- [Getting a Resource](client.md#Getting a Resource)
+- [Purpose of the Client](#purpose-of-the-client)
+- [Getting Started](#getting-started)
+- [Authentication](#authentication)
+- [Creating a Resource](#creating-a-resource)
+- [Finding Resources](#finding-resources)
+- [Getting a Resource](#getting-a-resource)
 
 #### Purpose of the Client
 
