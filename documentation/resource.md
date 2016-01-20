@@ -3,15 +3,14 @@
 
 Foreword: All resource objects are [interned](resource-interning.md).
 
-- [Examining resource attributes](client.md#Examining resource attributes)
-- [Setting resource attributes](client.md#Setting resource attributes)
-- [Syncing a resource with the remote service](client.md#Syncing a resource with the remote service)
-- [Flattening a resource](client.md#Flattening a resource)
-- [Debugging nested resources](client.md#Debugging nested resources)
-- [Flattening a resource](client.md#Flattening a resource)
-- [Debugging nested resources](client.md#Debugging nested resources)
-- [Changing resource relations](client.md#Changing resource relations)
-- [Deleting a resource](client.md#Deleting a resource)
+- [Examining resource attributes](#examining-resource-attributes)
+- [Setting resource attributes](#setting-resource-attributes)
+- [Syncing a resource with the remote service](#syncing-a-resource-with-the-remote-service)
+- [Flattening a resource](#flattening-a-resource)
+- [Debugging nested resources](#debugging-nested-resources)
+- [Fetching related resources](#fetching-related-resources)
+- [Changing resource relations](#changing-resource-relations)
+- [Deleting a resource](#deleting-a-resource)
 
 #### Examining resource attributes
 

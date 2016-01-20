@@ -1,8 +1,8 @@
 
 ## Errors
 
-- [Purpose of Errors](client.md#Purpose of Errors)
-- [Error properties](client.md#Error properties)
+- [Purpose of Errors](#purpose-of-errors)
+- [Error properties](#error-properties)
 
 #### Purpose of Errors
 
