@@ -1,6 +1,5 @@
 "use strict";
 var assert = require("assert");
-var jsonApiTestServer = require("jsonapi-server/example/server.js");
 var Client = require("../.");
 
 var client = new Client("http://localhost:16006/rest");
@@ -27,12 +26,5 @@ describe("Testing jsonapi-client", function() {
         });
       });
     });
-  });
-
-  before(function() {
-    jsonApiTestServer.start();
-  });
-  after(function() {
-    jsonApiTestServer.close();
   });
 });

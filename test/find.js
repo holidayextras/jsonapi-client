@@ -1,6 +1,5 @@
 "use strict";
 var assert = require("assert");
-var jsonApiTestServer = require("jsonapi-server/example/server.js");
 var Client = require("../.");
 
 var client = new Client("http://localhost:16006/rest");
@@ -27,6 +26,7 @@ describe("Testing jsonapi-client", function() {
               "id": "de305d54-75b4-431b-adb2-eb6b9e546014",
               "type": "articles",
               "title": "NodeJS Best Practices",
+              "status": "published",
               "content": "na",
               "author": "[Circular]",
               "tags": [
@@ -77,12 +77,5 @@ describe("Testing jsonapi-client", function() {
 
       done();
     });
-  });
-
-  before(function() {
-    jsonApiTestServer.start();
-  });
-  after(function() {
-    jsonApiTestServer.close();
   });
 });

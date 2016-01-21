@@ -1,6 +1,5 @@
 "use strict";
 var assert = require("assert");
-var jsonApiTestServer = require("jsonapi-server/example/server.js");
 var Client = require("../.");
 
 describe("Testing jsonapi-client", function() {
@@ -13,31 +12,24 @@ describe("Testing jsonapi-client", function() {
         }
       });
 
-      client.get("people", { }, function(err) {
+      client.get("people", "ad3aa89e-9c5b-4ac9-a652-6670f9f27587", function(err) {
         assert.equal(err.message, "401 Unauthorized");
         done();
       });
     });
 
-    it("is denied access with the blockMe cookie", function(done) {
+    xit("is denied access with the blockMe cookie", function(done) {
       var client = new Client("http://localhost:16006/rest", {
         cookie: {
           blockMe: true
         }
       });
 
-      client.get("people", { }, function(err) {
+      client.get("people", "ad3aa89e-9c5b-4ac9-a652-6670f9f27587", function(err) {
         assert.equal(err.message, "401 Unauthorized");
         done();
       });
     });
 
-  });
-
-  before(function() {
-    jsonApiTestServer.start();
-  });
-  after(function() {
-    jsonApiTestServer.close();
   });
 });
