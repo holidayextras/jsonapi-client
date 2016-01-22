@@ -3,6 +3,8 @@
 [![Code Climate](https://codeclimate.com/github/holidayextras/jsonapi-client/badges/gpa.svg)](https://codeclimate.com/github/holidayextras/jsonapi-client)
 [![Dependencies Status](https://david-dm.org/holidayextras/jsonapi-client.svg)](https://david-dm.org/holidayextras/jsonapi-client)
 
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/theninj4.svg)](https://saucelabs.com/u/theninj4)
+
 # jsonapi-client
 
 A javascript module designed to make it really easy to consume a `json:api` service.
