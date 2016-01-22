@@ -9,7 +9,7 @@ var Client = module.exports = function(path, auth) {
 };
 
 if (typeof window !== "undefined") {
-  window.jsonapiClient = Client; // eslint-disable-line
+  window.JsonapiClient = Client; // eslint-disable-line
 }
 
 var Promise = require("promise");
