@@ -8,6 +8,10 @@ var Client = module.exports = function(path, auth) {
   this._construct(path, auth);
 };
 
+if (typeof window !== "undefined") {
+  window.jsonapiClient = Client; // eslint-disable-line
+}
+
 var Promise = require("promise");
 // Promise.denodeify = function(a) { return a; };
 var Resource = require("./Resource");

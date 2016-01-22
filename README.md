@@ -21,6 +21,18 @@ This module is tested against the example json:api server provided by  [jsonapi-
 
 ### The tl;dr
 
+#### In a browser
+```html
+<script src="/dist/jsonapi-client.min.js"></script>
+<script type="text/javascript">
+  var client = new JsonapiClient("http://localhost:16006/rest", {
+    header: {
+      authToken: "2ad1d6f7-e1d0-480d-86b2-dfad8af4a5b3"
+    }
+  });
+</script>
+```
+
 #### Creating a new Client
 ```javascript
 var JsonapiClient = require("jsonapi-client");
