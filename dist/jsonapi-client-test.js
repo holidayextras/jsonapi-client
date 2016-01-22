@@ -387,7 +387,7 @@ var Transport = module.exports = function(path, auth) {
 };
 
 var request = require("superagent");
-var Perry = require('perry');
+var Perry = require("perry");
 
 Transport.prototype._construct = function(path, auth) {
   this._path = path;
@@ -16519,6 +16519,7 @@ after(function() {
 "use strict";
 var assert = require("assert");
 var Client = require("../.");
+require("./_testServer.js");
 
 describe("Testing jsonapi-client", function() {
   describe("authentication", function() {
@@ -16552,10 +16553,11 @@ describe("Testing jsonapi-client", function() {
   });
 });
 
-},{"../.":1,"assert":6}],32:[function(require,module,exports){
+},{"../.":1,"./_testServer.js":30,"assert":6}],32:[function(require,module,exports){
 "use strict";
 var assert = require("assert");
 var Client = require("../.");
+require("./_testServer.js");
 
 var client = new Client("http://localhost:16006/rest");
 
@@ -16602,10 +16604,11 @@ describe("Testing jsonapi-client", function() {
   });
 });
 
-},{"../.":1,"assert":6}],33:[function(require,module,exports){
+},{"../.":1,"./_testServer.js":30,"assert":6}],33:[function(require,module,exports){
 "use strict";
 var assert = require("assert");
 var Client = require("../.");
+require("./_testServer.js");
 
 var client = new Client("http://localhost:16006/rest");
 
@@ -16634,10 +16637,11 @@ describe("Testing jsonapi-client", function() {
   });
 });
 
-},{"../.":1,"assert":6}],34:[function(require,module,exports){
+},{"../.":1,"./_testServer.js":30,"assert":6}],34:[function(require,module,exports){
 "use strict";
 var assert = require("assert");
 var Client = require("../.");
+require("./_testServer.js");
 
 var client = new Client("http://localhost:16006/rest");
 
@@ -16778,10 +16782,11 @@ describe("Testing jsonapi-client", function() {
 
 });
 
-},{"../.":1,"assert":6}],35:[function(require,module,exports){
+},{"../.":1,"./_testServer.js":30,"assert":6}],35:[function(require,module,exports){
 "use strict";
 var assert = require("assert");
 var Client = require("../.");
+require("./_testServer.js");
 
 var client = new Client("http://localhost:16006/rest");
 
@@ -16861,10 +16866,11 @@ describe("Testing jsonapi-client", function() {
   });
 });
 
-},{"../.":1,"assert":6}],36:[function(require,module,exports){
+},{"../.":1,"./_testServer.js":30,"assert":6}],36:[function(require,module,exports){
 "use strict";
 var assert = require("assert");
 var Client = require("../.");
+require("./_testServer.js");
 
 var client = new Client("http://localhost:16006/rest");
 
@@ -16910,10 +16916,11 @@ describe("Testing jsonapi-client", function() {
   });
 });
 
-},{"../.":1,"assert":6}],37:[function(require,module,exports){
+},{"../.":1,"./_testServer.js":30,"assert":6}],37:[function(require,module,exports){
 "use strict";
 var assert = require("assert");
 var Client = require("../.");
+require("./_testServer.js");
 
 var client = new Client("http://localhost:16006/rest");
 
@@ -16961,10 +16968,11 @@ describe("Testing jsonapi-client", function() {
 
 });
 
-},{"../.":1,"assert":6}],38:[function(require,module,exports){
+},{"../.":1,"./_testServer.js":30,"assert":6}],38:[function(require,module,exports){
 "use strict";
 var assert = require("assert");
 var Client = require("../.");
+require("./_testServer.js");
 
 var client = new Client("http://localhost:16006/rest");
 
@@ -16994,4 +17002,4 @@ describe("Testing jsonapi-client", function() {
   });
 });
 
-},{"../.":1,"assert":6}]},{},[30,31,32,33,34,35,36,37,38]);
+},{"../.":1,"./_testServer.js":30,"assert":6}]},{},[30,31,32,33,34,35,36,37,38]);

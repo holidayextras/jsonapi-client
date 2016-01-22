@@ -1,6 +1,7 @@
 "use strict";
 var assert = require("assert");
 var Client = require("../.");
+require("./_testServer.js");
 
 describe("Testing jsonapi-client", function() {
   describe("authentication", function() {

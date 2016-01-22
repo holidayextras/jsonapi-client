@@ -1,6 +1,7 @@
 "use strict";
 var assert = require("assert");
 var Client = require("../.");
+require("./_testServer.js");
 
 var client = new Client("http://localhost:16006/rest");
 
