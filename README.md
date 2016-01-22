@@ -3,6 +3,8 @@
 [![Code Climate](https://codeclimate.com/github/holidayextras/jsonapi-client/badges/gpa.svg)](https://codeclimate.com/github/holidayextras/jsonapi-client)
 [![Dependencies Status](https://david-dm.org/holidayextras/jsonapi-client.svg)](https://david-dm.org/holidayextras/jsonapi-client)
 
+[![Sauce Test Status](https://saucelabs.com/browser-matrix/theninj4.svg)](https://saucelabs.com/u/theninj4)
+
 # jsonapi-client
 
 A javascript module designed to make it really easy to consume a `json:api` service.
@@ -20,6 +22,18 @@ This module is tested against the example json:api server provided by  [jsonapi-
 - [Resource Interning](documentation/resource-interning.md)
 
 ### The tl;dr
+
+#### In a browser
+```html
+<script src="/dist/jsonapi-client.min.js"></script>
+<script type="text/javascript">
+  var client = new JsonapiClient("http://localhost:16006/rest", {
+    header: {
+      authToken: "2ad1d6f7-e1d0-480d-86b2-dfad8af4a5b3"
+    }
+  });
+</script>
+```
 
 #### Creating a new Client
 ```javascript
