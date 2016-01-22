@@ -1,58 +1,73 @@
 "use strict";
-/* eslint-disable */
+
 var customLaunchers = {
-  sl_chrome: {
+  win10chrome: {
     base: "SauceLabs",
     browserName: "chrome",
-    platform: "Windows 7",
-    version: "35"
+    platform: "Windows 10"
   },
-  // sl_firefox: {
-  //   base: "SauceLabs",
-  //   browserName: "firefox",
-  //   version: "30"
-  // },
-  // sl_ios_safari: {
-  //   base: "SauceLabs",
-  //   browserName: "iphone",
-  //   platform: "OS X 10.9",
-  //   version: "7.1"
-  // },
-  // sl_ie_11: {
-  //   base: "SauceLabs",
-  //   browserName: "internet explorer",
-  //   platform: "Windows 8.1",
-  //   version: "11"
-  // }
+  androidChrome: {
+    base: "SauceLabs",
+    browserName: "android",
+    platform: "Linux"
+  },
+  win10firefox: {
+    base: "SauceLabs",
+    browserName: "firefox",
+    platform: "Windows 10"
+  },
+  iosSafari: {
+    base: "SauceLabs",
+    browserName: "iphone",
+    platform: "OS X 10.10"
+  },
+  iosSafari92: {
+    base: "SauceLabs",
+    browserName: "iphone",
+    platform: "OS X 10.10",
+    version: "9.2"
+  },
+  win10ie11: {
+    base: "SauceLabs",
+    browserName: "internet explorer",
+    platform: "Windows 10"
+  },
+  win7ie9: {
+    base: "SauceLabs",
+    browserName: "internet explorer",
+    platform: "Windows 7",
+    version: "9.0"
+  }
 };
 
 module.exports = function(config) {
   config.set({
     sauceLabs: {
-        testName: "jsonapi-client full stack tests"
+      testName: "jsonapi-client full stack tests"
     },
     customLaunchers: customLaunchers,
     browsers: Object.keys(customLaunchers),
-    reporters: [ "dots", "saucelabs" ],
-    singleRun: true,
-    basePath: "",
     frameworks: [ "mocha" ],
+    reporters: [ "spec", "saucelabs" ],
+    plugins: [ "karma-mocha", "karma-sauce-launcher", "karma-spec-reporter" ],
+    singleRun: true,
+    autoWatch: false,
     files: [
+      "https://cdn.polyfill.io/v2/polyfill.js?features=Promise",
       "dist/jsonapi-client-test.js"
     ],
     port: 9876,
     colors: true,
-    logLevel: config.LOG_DEBUG,
-    autoWatch: false,
-    concurrency: 1,
+    logLevel: config.LOG_INFO,
+    concurrency: 5,
     client: {
       captureConsole: true,
       timeout: 10000
     },
     startConnect: true,
     connectOptions: {
-      verbose: true,
-      verboseDebugging: true,
+      verbose: false,
+      verboseDebugging: false
     },
     browserNoActivityTimeout: 30000
   });
