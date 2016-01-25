@@ -423,7 +423,7 @@ Transport.prototype._action = function(method, url, data, callback) {
     someRequest = someRequest.send(data);
   }
   someRequest.end(function(err, payload) {
-    // console.log("=>", err, JSON.stringify(JSON.parse(payload.text), null, 2));
+    // console.log("=>", err, payload);
     if (err) {
       // console.log(err.response.text);
       if (err.status === 401) {
@@ -434,6 +434,7 @@ Transport.prototype._action = function(method, url, data, callback) {
       try {
         response = JSON.parse(err.response.text);
       } catch(e) {
+        console.error("Transport Error: " + JSON.stringify(err));
         return callback(new Error("Invalid response from server"));
       }
 
@@ -16567,45 +16568,46 @@ var client = new Client("http://localhost:16006/rest");
 
 describe("Testing jsonapi-client", function() {
 
-  it("creates a resource", function(done) {
-    var newPerson = client.create("people");
-    newPerson.set("email", "foo@bar.com");
+  context("supports promises", function() {
 
-    assert.deepEqual(newPerson.toJSON(), {
-      id: null,
-      type: "people",
-      email: "foo@bar.com"
+    it("client.find", function(done) {
+      client.find("people", { }).then(function(people) {
+        assert.ok(people[0] instanceof Client.Resource);
+      }).then(done, done);
     });
 
-    newPerson.sync(function(err1) {
-      assert.equal(err1, null);
-      assert.ok(newPerson._getUidString().match(/[a-z0-9-]+\/people/));
+    it("client.get", function(done) {
+      client.get("people", "d850ea75-4427-4f81-8595-039990aeede5", { }).then(function(person) {
+        assert.ok(person instanceof Client.Resource);
+      }).then(done, done);
+    });
 
-      client.get("people", newPerson._getUid(), { }, function(err2, somePerson) {
-        assert.equal(err2, null);
-        assert.equal(newPerson, somePerson);
+    it("client.fetch", function(done) {
+      client.get("people", "d850ea75-4427-4f81-8595-039990aeede5", { }).then(function(person) {
+        return person.fetch("articles");
+      }).then(function(articles) {
+        assert.ok(articles[0] instanceof Client.Resource);
+      }).then(done, done);
+    });
 
+    it("create-sync-delete", function(done) {
+      var newPerson = client.create("people");
+      var uuid;
+      newPerson.sync().then(function() {
+        uuid = newPerson._getUid();
+        return newPerson.delete();
+      }).then(function() {
+        return client.get("people", uuid, { });
+      }).then(function() {
+        throw new Error("Should have errored!");
+      }, function(err) {
+        assert.ok(err.message.match(/There is no people with id /));
         done();
       });
     });
+
   });
 
-  it("passes back server errors", function(done) {
-    var newArticle = client.create("articles");
-    newArticle.set("content", "foobar");
-
-    assert.deepEqual(newArticle.toJSON(), {
-      id: null,
-      type: "articles",
-      content: "foobar"
-    });
-
-    newArticle.sync(function(err1) {
-      assert.equal(err1.status, 403); // (Resource is missing "title" attribute)
-
-      done();
-    });
-  });
 });
 
 },{"../.":1,"./_testServer.js":30,"assert":6}],33:[function(require,module,exports){
@@ -16618,39 +16620,121 @@ var client = new Client("http://localhost:16006/rest");
 
 describe("Testing jsonapi-client", function() {
 
-  it("deletes a resource", function(done) {
-    client.get("people", "32fb0105-acaa-4adb-9ec4-8b49633695e1", { }, function(getErr, people) {
-      assert.equal(getErr, null);
+  context("searches for resources", function() {
+    it("resource.toJSONTree() should provide developer-friendly debug info", function(done) {
+      client.find("people", { include: "articles", filter: { lastname: "Rumbelow"}}, function(err, people) {
+        assert.equal(err, null);
 
-      people.delete(function(deleteErr) {
-        assert.equal(deleteErr, null);
-
-        assert.deepEqual(people._getBase(), {
-          id: null,
-          type: "people"
+        var treeView = people.map(function(person) {
+          return person.toJSONTree();
         });
 
-        client.get("people", "32fb0105-acaa-4adb-9ec4-8b49633695e1", { }, function(err) {
-          assert.equal(err.status, 404);
-          assert.equal(err.message, "\"There is no people with id 32fb0105-acaa-4adb-9ec4-8b49633695e1\"");
+        assert.deepEqual(treeView, [
+          {
+            "id": "cc5cca2e-0dd8-4b95-8cfc-a11230e73116",
+            "type": "people",
+            "firstname": "Oli",
+            "lastname": "Rumbelow",
+            "email": "oliver.rumbelow@example.com",
+            "articles": [
+              {
+                "id": "de305d54-75b4-431b-adb2-eb6b9e546014",
+                "type": "articles",
+                "title": "NodeJS Best Practices",
+                "status": "published",
+                "content": "na",
+                "author": "[Circular]",
+                "tags": [
+                  {
+                    "type": "tags",
+                    "id": "7541a4de-4986-4597-81b9-cf31b6762486"
+                  }
+                ],
+                "photos": [],
+                "comments": [
+                  {
+                    "type": "comments",
+                    "id": "3f1a89c2-eb85-4799-a048-6735db24b7eb"
+                  }
+                ]
+              }
+            ],
+            "photos": null
+          }
+        ]);
 
-          done();
-        });
+        done();
+      });
+    });
+
+    it("finds resources", function(done) {
+      client.find("articles", { }, function(err, people) {
+        assert.equal(err, null);
+        assert.equal(people.length, 4);
+
+        done();
+      });
+    });
+
+    it("filters resources", function(done) {
+      client.find("articles", { filter: { title: "<M" } }, function(err, people) {
+        assert.equal(err, null);
+        assert.equal(people.length, 2);
+
+        done();
+      });
+    });
+
+    it("passes back server errors", function(done) {
+      client.find("articles", { filter: { foobar: "<M" } }, function(err) {
+        assert.ok(err instanceof Error);
+        assert.equal(err.message, "\"articles do not have property foobar\"");
+
+        done();
       });
     });
   });
-});
 
-},{"../.":1,"./_testServer.js":30,"assert":6}],34:[function(require,module,exports){
-"use strict";
-var assert = require("assert");
-var Client = require("../.");
-require("./_testServer.js");
+  it("gets existing resources", function() {
+    it("gets a resource", function(done) {
+      client.get("people", "ad3aa89e-9c5b-4ac9-a652-6670f9f27587", { }, function(err, people) {
+        assert.equal(err, null);
+        assert.deepEqual(people.toJSON(), {
+          id: "ad3aa89e-9c5b-4ac9-a652-6670f9f27587",
+          type: "people",
+          firstname: "Rahul",
+          lastname: "Patel",
+          email: "rahul.patel@example.com",
+          articles: undefined,
+          photos: undefined
+        });
 
-var client = new Client("http://localhost:16006/rest");
+        done();
+      });
+    });
 
-describe("Testing jsonapi-client", function() {
-
+    it("links included resources", function(done) {
+      client.get("people", "d850ea75-4427-4f81-8595-039990aeede5", { include: "photos" }, function(err, people) {
+        assert.equal(err, null);
+        assert.ok(people.photos);
+        assert.equal(people, people.photos[0].photographer);
+        assert.deepEqual(people.photos[0].toJSON(), {
+          id: "72695cbd-e9ef-44f6-85e0-0dbc06a269e8",
+          type: "photos",
+          title: "Penguins",
+          url: "http://www.example.com/penguins",
+          height: 220,
+          width: 60,
+          photographer: {
+            type: "people",
+            id: "d850ea75-4427-4f81-8595-039990aeede5"
+          },
+          articles: undefined
+        });
+        done();
+      });
+    });
+  });
   describe("fetches foreign resources", function() {
     var person, photo;
 
@@ -16696,7 +16780,7 @@ describe("Testing jsonapi-client", function() {
       var somePhoto = person.photos[0];
       assert.throws(function() {
         somePhoto.relationships("photographer").add("foobar");
-      }, /Expected Resource, got String/);
+      }, /Expected Resource, got /);
     });
 
     it("removing the linked resource works fine", function(done) {
@@ -16786,7 +16870,7 @@ describe("Testing jsonapi-client", function() {
 
 });
 
-},{"../.":1,"./_testServer.js":30,"assert":6}],35:[function(require,module,exports){
+},{"../.":1,"./_testServer.js":30,"assert":6}],34:[function(require,module,exports){
 "use strict";
 var assert = require("assert");
 var Client = require("../.");
@@ -16795,215 +16879,97 @@ require("./_testServer.js");
 var client = new Client("http://localhost:16006/rest");
 
 describe("Testing jsonapi-client", function() {
+  var uuid;
 
-  it("resource.toJSONTree() should provide developer-friendly debug info", function(done) {
-    client.find("people", { include: "articles", filter: { lastname: "Rumbelow"}}, function(err, people) {
-      assert.equal(err, null);
-
-      var treeView = people.map(function(person) {
-        return person.toJSONTree();
-      });
-
-      assert.deepEqual(treeView, [
-        {
-          "id": "cc5cca2e-0dd8-4b95-8cfc-a11230e73116",
-          "type": "people",
-          "firstname": "Oli",
-          "lastname": "Rumbelow",
-          "email": "oliver.rumbelow@example.com",
-          "articles": [
-            {
-              "id": "de305d54-75b4-431b-adb2-eb6b9e546014",
-              "type": "articles",
-              "title": "NodeJS Best Practices",
-              "status": "published",
-              "content": "na",
-              "author": "[Circular]",
-              "tags": [
-                {
-                  "type": "tags",
-                  "id": "7541a4de-4986-4597-81b9-cf31b6762486"
-                }
-              ],
-              "photos": [],
-              "comments": [
-                {
-                  "type": "comments",
-                  "id": "3f1a89c2-eb85-4799-a048-6735db24b7eb"
-                }
-              ]
-            }
-          ],
-          "photos": null
-        }
-      ]);
-
-      done();
-    });
-  });
-
-  it("finds resources", function(done) {
-    client.find("articles", { }, function(err, people) {
-      assert.equal(err, null);
-      assert.equal(people.length, 4);
-
-      done();
-    });
-  });
-
-  it("filters resources", function(done) {
-    client.find("articles", { filter: { title: "<M" } }, function(err, people) {
-      assert.equal(err, null);
-      assert.equal(people.length, 2);
-
-      done();
-    });
-  });
-
-  it("passes back server errors", function(done) {
-    client.find("articles", { filter: { foobar: "<M" } }, function(err) {
-      assert.ok(err instanceof Error);
-      assert.equal(err.message, "\"articles do not have property foobar\"");
-
-      done();
-    });
-  });
-});
-
-},{"../.":1,"./_testServer.js":30,"assert":6}],36:[function(require,module,exports){
-"use strict";
-var assert = require("assert");
-var Client = require("../.");
-require("./_testServer.js");
-
-var client = new Client("http://localhost:16006/rest");
-
-describe("Testing jsonapi-client", function() {
-
-  it("gets a resource", function(done) {
-    client.get("people", "ad3aa89e-9c5b-4ac9-a652-6670f9f27587", { }, function(err, people) {
-      assert.equal(err, null);
-      assert.deepEqual(people.toJSON(), {
-        id: "ad3aa89e-9c5b-4ac9-a652-6670f9f27587",
-        type: "people",
-        firstname: "Rahul",
-        lastname: "Patel",
-        email: "rahul.patel@example.com",
-        articles: undefined,
-        photos: undefined
-      });
-
-      done();
-    });
-  });
-
-  it("links included resources", function(done) {
-    client.get("people", "d850ea75-4427-4f81-8595-039990aeede5", { include: "photos" }, function(err, people) {
-      assert.equal(err, null);
-      assert.ok(people.photos);
-      assert.equal(people, people.photos[0].photographer);
-      assert.deepEqual(people.photos[0].toJSON(), {
-        id: "72695cbd-e9ef-44f6-85e0-0dbc06a269e8",
-        type: "photos",
-        title: "Penguins",
-        url: "http://www.example.com/penguins",
-        height: 220,
-        width: 60,
-        photographer: {
-          type: "people",
-          id: "d850ea75-4427-4f81-8595-039990aeede5"
-        },
-        articles: undefined
-      });
-      done();
-    });
-  });
-});
-
-},{"../.":1,"./_testServer.js":30,"assert":6}],37:[function(require,module,exports){
-"use strict";
-var assert = require("assert");
-var Client = require("../.");
-require("./_testServer.js");
-
-var client = new Client("http://localhost:16006/rest");
-
-describe("Testing jsonapi-client", function() {
-
-  context("supports promises", function() {
-
-    it("client.find", function(done) {
-      client.find("people", { }).then(function(people) {
-        assert.ok(people[0] instanceof Client.Resource);
-      }).then(done, done);
-    });
-
-    it("client.get", function(done) {
-      client.get("people", "d850ea75-4427-4f81-8595-039990aeede5", { }).then(function(person) {
-        assert.ok(person instanceof Client.Resource);
-      }).then(done, done);
-    });
-
-    it("client.fetch", function(done) {
-      client.get("people", "d850ea75-4427-4f81-8595-039990aeede5", { }).then(function(person) {
-        return person.fetch("articles");
-      }).then(function(articles) {
-        assert.ok(articles[0] instanceof Client.Resource);
-      }).then(done, done);
-    });
-
-    it("create-sync-delete", function(done) {
+  context("mutates", function() {
+    it("creates a resource", function(done) {
       var newPerson = client.create("people");
-      var uuid;
-      newPerson.sync().then(function() {
-        uuid = newPerson._getUid();
-        return newPerson.delete();
-      }).then(function() {
-        return client.get("people", uuid, { });
-      }).then(function() {
-        throw new Error("Should have errored!");
-      }, function(err) {
-        assert.ok(err.message.match(/There is no people with id /));
-        done();
+      newPerson.set("email", "mark.fermor@example.com");
+
+      assert.deepEqual(newPerson.toJSON(), {
+        id: null,
+        type: "people",
+        email: "mark.fermor@example.com"
       });
-    });
 
-  });
+      newPerson.sync(function(err1) {
+        assert.equal(err1, null);
+        uuid = newPerson._getUid();
+        assert.ok(newPerson._getUidString().match(/[a-z0-9-]+\/people/));
 
-});
-
-},{"../.":1,"./_testServer.js":30,"assert":6}],38:[function(require,module,exports){
-"use strict";
-var assert = require("assert");
-var Client = require("../.");
-require("./_testServer.js");
-
-var client = new Client("http://localhost:16006/rest");
-
-describe("Testing jsonapi-client", function() {
-
-  it("syncs a resource", function(done) {
-    client.get("people", "d850ea75-4427-4f81-8595-039990aeede5", { }, function(err1, people) {
-      assert.equal(err1, null);
-      assert.equal(people.get("email"), "mark.fermor@example.com");
-
-      people.set("email", "fermor.mark@example.com");
-      people.sync(function(err2) {
-        assert.equal(err2, null);
-
-        assert.equal(people.get("email"), "fermor.mark@example.com");
-
-        client.get("people", "d850ea75-4427-4f81-8595-039990aeede5", { }, function(err3, people2) {
-          assert.equal(err3, null);
-          assert.equal(people2.get("email"), "fermor.mark@example.com");
-
-          assert.equal(people, people2);
+        client.get("people", newPerson._getUid(), { }, function(err2, somePerson) {
+          assert.equal(err2, null);
+          assert.equal(newPerson, somePerson);
 
           done();
         });
       });
     });
+
+    it("syncs a resource", function(done) {
+      client.get("people", uuid, { }, function(err1, people) {
+        assert.equal(err1, null);
+        assert.equal(people.get("email"), "mark.fermor@example.com");
+
+        people.set("email", "fermor.mark@example.com");
+        people.sync(function(err2) {
+          assert.equal(err2, null);
+
+          assert.equal(people.get("email"), "fermor.mark@example.com");
+
+          client.get("people", uuid, { }, function(err3, people2) {
+            assert.equal(err3, null);
+            assert.equal(people2.get("email"), "fermor.mark@example.com");
+
+            assert.equal(people, people2);
+
+            done();
+          });
+        });
+      });
+    });
+
+
+    it("deletes a resource", function(done) {
+      client.get("people", uuid, { }, function(getErr, people) {
+        assert.equal(getErr, null);
+
+        people.delete(function(deleteErr) {
+          assert.equal(deleteErr, null);
+
+          assert.deepEqual(people._getBase(), {
+            id: null,
+            type: "people"
+          });
+
+          client.get("people", uuid, { }, function(err) {
+            console.log(arguments);
+            assert.equal(err.status, 404);
+            assert.equal(err.message, "\"There is no people with id " + uuid + "\"");
+
+            done();
+          });
+        });
+      });
+    });
+  });
+
+  it("passes back server errors", function(done) {
+    var newArticle = client.create("articles");
+    newArticle.set("content", "foobar");
+
+    assert.deepEqual(newArticle.toJSON(), {
+      id: null,
+      type: "articles",
+      content: "foobar"
+    });
+
+    newArticle.sync(function(err1) {
+      assert.equal(err1.status, 403); // (Resource is missing "title" attribute)
+
+      done();
+    });
   });
 });
 
-},{"../.":1,"./_testServer.js":30,"assert":6}]},{},[30,31,32,33,34,35,36,37,38]);
+},{"../.":1,"./_testServer.js":30,"assert":6}]},{},[30,31,32,33,34]);
