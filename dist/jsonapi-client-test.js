@@ -447,7 +447,7 @@ Transport.prototype._action = function(method, url, data, callback) {
         return callback(Transport._defaultError(response));
       }
 
-      if (!(response.errors instanceof Array)) {
+      if (!Array.isArray(response.errors)) {
         console.error("Invalid Error payload!", response);
         return callback(Transport._defaultError(response));
       }
@@ -16887,7 +16887,7 @@ describe("Testing jsonapi-client", function() {
   });
 
   describe("testing invalid payloads", function() {
-    it("doesnt crash when we get a non-conformant response", function(done) {
+    it("doesn't crash when we get a non-conformant response", function(done) {
       var badClient = new Client("http://localhost:12345");
       badClient.find("articles", { }, function(err) {
         assert.deepEqual(err, {
