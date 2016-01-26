@@ -413,6 +413,15 @@ Transport.prototype._attachAuthToRequest = function(someRequest) {
   }
 };
 
+Transport._defaultError = function(response) {
+  return {
+    status: "500",
+    code: "EUNKNOWN",
+    title: "An unknown error has occured",
+    detail: response
+  };
+};
+
 Transport.prototype._action = function(method, url, data, callback) {
   // console.log(method, url, JSON.stringify(data, null, 2));
   var someRequest = request[method](url);
@@ -435,7 +444,12 @@ Transport.prototype._action = function(method, url, data, callback) {
         response = JSON.parse(err.response.text);
       } catch(e) {
         console.error("Transport Error: " + JSON.stringify(err));
-        return callback(new Error("Invalid response from server"));
+        return callback(Transport._defaultError(response));
+      }
+
+      if (!Array.isArray(response.errors)) {
+        console.error("Invalid Error payload!", response);
+        return callback(Transport._defaultError(response));
       }
 
       var realErrors = response.errors.map(function(apiError) {
@@ -451,7 +465,15 @@ Transport.prototype._action = function(method, url, data, callback) {
     }
 
     if (!payload.body) {
-      payload.body = JSON.parse(payload.text);
+      try {
+        payload.body = JSON.parse(payload.text);
+      } catch(e) {
+        return callback(Transport._defaultError(payload));
+      }
+    }
+
+    if (!payload.body) {
+      return callback(Transport._defaultError(payload));
     }
 
     return callback(null, payload.body, payload.body.data, payload.body.included);
@@ -16866,6 +16888,21 @@ describe("Testing jsonapi-client", function() {
       assert.throws(function() { person.relationships("photos"); });
     });
 
+  });
+
+  describe("testing invalid payloads", function() {
+    it("doesn't crash when we get a non-conformant response", function(done) {
+      var badClient = new Client("http://localhost:12345");
+      badClient.find("articles", { }, function(err) {
+        assert.deepEqual(err, {
+          "status": "500",
+          "code": "EUNKNOWN",
+          "title": "An unknown error has occured",
+          "detail": undefined
+        });
+        done();
+      });
+    });
   });
 
 });

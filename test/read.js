@@ -255,4 +255,19 @@ describe("Testing jsonapi-client", function() {
 
   });
 
+  describe("testing invalid payloads", function() {
+    it("doesn't crash when we get a non-conformant response", function(done) {
+      var badClient = new Client("http://localhost:12345");
+      badClient.find("articles", { }, function(err) {
+        assert.deepEqual(err, {
+          "status": "500",
+          "code": "EUNKNOWN",
+          "title": "An unknown error has occured",
+          "detail": undefined
+        });
+        done();
+      });
+    });
+  });
+
 });
