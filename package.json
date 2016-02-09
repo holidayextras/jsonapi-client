@@ -40,13 +40,14 @@
     "uglifyjs": "2.4.10"
   },
   "scripts": {
-    "build": "./node_modules/browserify/bin/cmd.js lib/Client.js | ./node_modules/uglifyjs/bin/uglifyjs -cm > dist/jsonapi-client.min.js",
+    "build": "mkdir -p dist && ./node_modules/.bin/browserify lib/Client.js | ./node_modules/.bin/uglifyjs -cm -o dist/jsonapi-client.min.js 2> /dev/null && echo '✔ Assets built!'",
+    "build:test": "npm run build && ./node_modules/.bin/browserify -i jsonapi-server/example/server.js test/*.js -o dist/jsonapi-client-test.js && echo '✔ Test assets built!'",
     "mocha": "./node_modules/mocha/bin/mocha -R spec ./test/*.js",
     "prekarmalocal": "node ./node_modules/jsonapi-server/example/server.js &",
-    "karmalocal": "sleep 1 && ./node_modules/browserify/bin/cmd.js --ignore jsonapi-server/example/server.js test/*.js > dist/jsonapi-client-test.js && ./node_modules/karma/bin/karma start ./karma.local.conf.js",
+    "karmalocal": "sleep 1 && npm run build:test && ./node_modules/karma/bin/karma start ./karma.local.conf.js",
     "postkarmalocal": "killall node",
     "prekarmaremote": "node ./node_modules/jsonapi-server/example/server.js &",
-    "karmaremote": "sleep 1 && ./node_modules/browserify/bin/cmd.js --ignore jsonapi-server/example/server.js test/*.js > dist/jsonapi-client-test.js && ./node_modules/karma/bin/karma start ./karma.saucelabs.conf.js",
+    "karmaremote": "sleep 1 && npm run build:test && ./node_modules/karma/bin/karma start ./karma.saucelabs.conf.js",
     "postkarmaremote": "killall node",
     "karma": "npm run karmalocal && npm run karmaremote",
     "test": "npm run mocha &&  npm run karma",
