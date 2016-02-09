@@ -1,5 +1,5 @@
-node_modules
-coverage.html
 complexity
-npm-debug.log
+coverage.html
 dist.js
+node_modules
+npm-debug.log
