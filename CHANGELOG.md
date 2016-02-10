@@ -1,3 +1,4 @@
+ - 2016-02-10 - v0.4.2 Fix adding/removing resources to/from relationships
  - 2016-02-08 - v0.4.1 Handling resources with no relationships
  - 2015-12-17 - v0.4.0 Better handling of non-json:api payloads
  - 2015-12-17 - v0.3.0 Fixes to enable usage in web browsers
