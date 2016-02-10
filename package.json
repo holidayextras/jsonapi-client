@@ -48,7 +48,7 @@
     "karmalocal": "sleep 1 && npm run build:test && ./node_modules/karma/bin/karma start ./karma.local.conf.js",
     "postkarmalocal": "killall node",
     "prekarmaremote": "node ./node_modules/jsonapi-server/example/server.js &",
-    "karmaremote": "sleep 1 && npm run build:test && ./node_modules/karma/bin/karma start ./karma.saucelabs.conf.js",
+    "karmaremote": "sleep 1 && npm run build:test && ./node_modules/karma/bin/karma start ./karma.saucelabs.conf.js || true",
     "postkarmaremote": "killall node",
     "karma": "npm run karmalocal && npm run karmaremote",
     "test": "npm run mocha &&  npm run karma",
