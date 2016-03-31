@@ -202,6 +202,22 @@ describe("Testing jsonapi-client", function() {
         setTimeout(function() { throw err; }, 0);
       });
     });
+
+    it("doesn't allow us to assign non-existing resources", function(done) {
+      var someTag, newTag;
+
+      client.find("tags", { }).then(function(allTags) {
+        someTag = allTags[0];
+
+        newTag = client.create("tags")
+          .set("name", "not-ready-yet");
+
+        assert.throws(function() {
+          someTag.relationships("parent").set(newTag);
+        });
+        done();
+      });
+    });
   });
 
 });
