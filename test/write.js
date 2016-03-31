@@ -197,6 +197,8 @@ describe("Testing jsonapi-client", function() {
         return someTag.fetch("articles");
       }).then(function() {
         assert.equal(someTag.articles[0], newArticle);
+        return newArticle.delete();
+      }).then(function() {
         done();
       }).catch(function(err) {
         setTimeout(function() { throw err; }, 0);
