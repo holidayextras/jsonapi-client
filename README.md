@@ -92,3 +92,14 @@ article.delete(function(err) {
   console.log("Resource deleted");
 });
 ```
+
+#### A more complex example
+```javascript
+}).then(function() {
+  return client.create("articles")
+    .set("title", "some fancy booklet")
+    .set("content", "oh-la-la!")
+    .relationships("tags").add(someTagResource)
+    .sync();
+}).then(function(newlyCreatedArticle) {
+```
