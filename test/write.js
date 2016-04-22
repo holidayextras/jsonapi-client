@@ -114,7 +114,7 @@ describe("Testing jsonapi-client", function() {
           res.article.relationships("tags").add(res.tag);
           async.waterfall([
             function(cb) {
-              res.article.sync(cb);
+              res.article.sync(function() { cb(); });
             },
             function(cb) {
               res.article.fetch("tags", cb);
@@ -132,7 +132,7 @@ describe("Testing jsonapi-client", function() {
           res.article.relationships("tags").remove(res.tag);
           async.waterfall([
             function(cb) {
-              res.article.sync(cb);
+              res.article.sync(function() { cb(); });
             },
             function(cb) {
               res.article.fetch("tags", cb);
@@ -177,6 +177,46 @@ describe("Testing jsonapi-client", function() {
         }
       ], function(err) {
         assert.equal(err, null);
+        done();
+      });
+    });
+
+    it("allows us to create and set relations before an initial sync", function(done) {
+      var someTag, newArticle;
+
+      client.find("tags", { }).then(function(allTags) {
+        someTag = allTags[0];
+      }).then(function() {
+        return client.create("articles")
+          .set("title", "some fancy booklet")
+          .set("content", "oh-la-la!")
+          .relationships("tags").add(someTag)
+          .sync();
+      }).then(function(newlyCreatedArticle) {
+        newArticle = newlyCreatedArticle;
+        return someTag.fetch("articles");
+      }).then(function() {
+        assert.equal(someTag.articles[0], newArticle);
+        return newArticle.delete();
+      }).then(function() {
+        done();
+      }).catch(function(err) {
+        setTimeout(function() { throw err; }, 0);
+      });
+    });
+
+    it("doesn't allow us to assign non-existing resources", function(done) {
+      var someTag, newTag;
+
+      client.find("tags", { }).then(function(allTags) {
+        someTag = allTags[0];
+
+        newTag = client.create("tags")
+          .set("name", "not-ready-yet");
+
+        assert.throws(function() {
+          someTag.relationships("parent").set(newTag);
+        });
         done();
       });
     });
