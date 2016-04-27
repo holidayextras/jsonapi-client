@@ -14,7 +14,8 @@ module.exports = function(config) {
     singleRun: true,
     concurrency: 1,
     client: {
-      captureConsole: true
+      captureConsole: true,
+      timeout: 10000
     }
   });
 };
