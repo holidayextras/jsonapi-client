@@ -16,6 +16,8 @@
   },
   "dependencies": {
     "async": "1.5.2",
+    "flow-bin": "^0.23.1",
+    "jscpd": "^0.6.1",
     "object-assign": "4.0.1",
     "perry": "0.1.3",
     "promise": "7.1.1",
@@ -55,7 +57,9 @@
     "coveralls": "./node_modules/mocha/bin/mocha --require blanket --reporter mocha-lcov-reporter ./test/*.js | ./node_modules/coveralls/bin/coveralls.js",
     "coverage": "./node_modules/mocha/bin/mocha --require blanket --reporter html-cov ./test/*.js > coverage.html",
     "complexity": "./node_modules/plato/bin/plato -r -d complexity lib",
-    "lint": "./node_modules/.bin/eslint ./lib/* ./test/*.js --quiet && echo '✔ All good!'"
+    "lint": "./node_modules/.bin/eslint ./lib/* ./test/*.js --quiet && echo '✔ All good!'",
+    "flow": "node ./node_modules/flow-bin/cli.js && echo '✔ All good!'",
+    "jscpd": "jscpd --blame -p ./lib/ || echo 'Finished!'"
   },
   "config": {
     "blanket": {
