@@ -207,18 +207,19 @@ describe("Testing jsonapi-client", function() {
       });
     });
 
-    it('fetches foreign many to one relationships', function(done) {
-      photo.fetch('photographer', function(err) {
+    it("fetches foreign many to one relationships", function(done) {
+      photo.fetch("photographer", function(err) {
+        assert.equal(err, null);
         assert.deepEqual(photo.photographer.toJSON(), {
-          id: 'd850ea75-4427-4f81-8595-039990aeede5',
-          type: 'people',
-          firstname: 'Mark',
-          lastname: 'Fermor',
-          email: 'mark.fermor@example.com',
+          id: "d850ea75-4427-4f81-8595-039990aeede5",
+          type: "people",
+          firstname: "Mark",
+          lastname: "Fermor",
+          email: "mark.fermor@example.com",
           articles: undefined,
           photos: [{
-            id: '72695cbd-e9ef-44f6-85e0-0dbc06a269e8',
-            type: 'photos'
+            id: "72695cbd-e9ef-44f6-85e0-0dbc06a269e8",
+            type: "photos"
           }]
         });
         done();
