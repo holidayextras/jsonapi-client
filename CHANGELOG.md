@@ -1,3 +1,4 @@
+ - 2016-06-08 - v0.5.1 Fixes retrieval of many-to-one relationships
  - 2016-04-22 - v0.5.0 Safer error extraction, relationship deduplication bug, adding relationships to new resources
  - 2016-03-10 - v0.4.3 Error handling when fetching related resources that don't exist
  - 2016-02-10 - v0.4.2 Fix adding/removing resources to/from relationships
