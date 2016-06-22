@@ -31,6 +31,8 @@ describe("Testing jsonapi-client", function() {
                 "status": "published",
                 "content": "na",
                 "author": "[Circular]",
+                "created": "2016-01-05",
+                "views": "10",
                 "tags": [
                   {
                     "type": "tags",
@@ -75,7 +77,7 @@ describe("Testing jsonapi-client", function() {
     it("passes back server errors", function(done) {
       client.find("articles", { filter: { foobar: "<M" } }, function(err) {
         assert.ok(err instanceof Error);
-        assert.equal(err.message, "\"articles do not have property foobar\"");
+        assert.equal(err.message, "\"articles do not have attribute or relationship 'foobar'\"");
 
         done();
       });
@@ -148,6 +150,7 @@ describe("Testing jsonapi-client", function() {
           "title": "Penguins",
           "url": "http://www.example.com/penguins",
           "width": 60,
+          "raw": false,
           "photographer": {
             "id": "d850ea75-4427-4f81-8595-039990aeede5",
             "type": "people"
@@ -257,6 +260,7 @@ describe("Testing jsonapi-client", function() {
           "title": "Penguins",
           "url": "http://www.example.com/penguins",
           "width": 60,
+          "raw": false,
           "photographer": {
             "id": "d850ea75-4427-4f81-8595-039990aeede5",
             "type": "people"
