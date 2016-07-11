@@ -16,6 +16,11 @@ var customLaunchers = {
     browserName: "firefox",
     platform: "Windows 10"
   },
+  osxSafari: {
+    base: "SauceLabs",
+    browserName: "safari",
+    platform: "OS X 10.11"
+  },
   iosSafari: {
     base: "SauceLabs",
     browserName: "iphone",
@@ -62,8 +67,20 @@ module.exports = function(config) {
     concurrency: 5,
     client: {
       captureConsole: true,
-      timeout: 10000
+      timeout: 10000,
+      mocha: {
+        timeout: 10000
+      }
     },
+    captureTimeout: 300000,
+    customHeaders: [{
+      name: "Access-Control-Allow-Origin",
+      value: "*"
+    },
+    {
+      name: "Access-Control-Allow-Methods",
+      value: "GET, POST, PATCH, DELETE, OPTIONS"
+    }],
     startConnect: true,
     connectOptions: {
       verbose: false,

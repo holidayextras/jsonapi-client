@@ -15,6 +15,7 @@ module.exports = function(config) {
     concurrency: 1,
     client: {
       captureConsole: true,
+      timeout: 10000,
       mocha: {
         timeout: 10000
       }
