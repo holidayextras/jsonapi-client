@@ -278,7 +278,7 @@ describe("Testing jsonapi-client", function() {
 
   });
 
-  describe("testing invalid payloads", function() {
+  describe.skip("testing invalid payloads", function() {
     it("doesn't crash when we get a non-conformant response", function(done) {
       var badClient = new Client("http://localhost:12345");
       badClient.find("articles", { }, function(err) {
