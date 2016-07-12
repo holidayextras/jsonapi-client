@@ -1,0 +1,10 @@
+[include]
+./lib/
+
+[ignore]
+.*node_modules/phantomjs/node_modules/npmconf/.*
+
+[options]
+module.ignore_non_literal_requires=true
+munge_underscores=true
+suppress_comment= \\(.\\|\n\\)*\\$FlowFixMe

@@ -6,8 +6,10 @@ addons:
   firefox: "latest"
 env:
   matrix:
+    - TEST_STEP=jscpd
     - TEST_STEP=lint
     - TEST_STEP=test
+    - TEST_STEP=flow
 notifications:
   email: false
 before_script:

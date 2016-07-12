@@ -26,6 +26,8 @@
     "browserify": "13.0.1",
     "coveralls": "2.11.9",
     "eslint": "3.0.1",
+    "flow-bin": "^0.28.0",
+    "jscpd": "^0.6.1",
     "eslint-config-eslint": "3.0.0",
     "jsonapi-server": "1.15.4",
     "karma": "1.1.0",
@@ -56,7 +58,9 @@
     "coveralls": "./node_modules/mocha/bin/mocha --require blanket --reporter mocha-lcov-reporter ./test/*.js | ./node_modules/coveralls/bin/coveralls.js",
     "coverage": "./node_modules/mocha/bin/mocha --require blanket --reporter html-cov ./test/*.js > coverage.html",
     "complexity": "./node_modules/plato/bin/plato -r -d complexity lib",
-    "lint": "./node_modules/.bin/eslint ./lib/* ./test/*.js --quiet && echo '✔ All good!'"
+    "lint": "./node_modules/.bin/eslint ./lib/* ./test/*.js --quiet && echo '✔ All good!'",
+    "flow": "node ./node_modules/flow-bin/cli.js && echo '✔ All good!'",
+    "jscpd": "jscpd --blame -p ./lib/ || echo 'Finished!'"
   },
   "config": {
     "blanket": {
