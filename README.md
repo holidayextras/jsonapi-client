@@ -6,7 +6,7 @@
 
 [![Sauce Test Status](https://saucelabs.com/browser-matrix/theninj4.svg)](https://saucelabs.com/u/theninj4)
 
-test update 2
+test update 3
 
 # jsonapi-client
 
