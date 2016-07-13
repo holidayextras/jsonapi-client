@@ -1,3 +1,8 @@
+ - 2016-07-13 - v0.7.0
+ - 2016-07-12 - Send id and type on PATCH requests
+ - 2016-07-12 - Add flow and jscpd to Travis
+ - 2016-07-12 - Use qs instead of perry for url formatting
+ - 2016-07-12 - Don't send null id when creating a resource
  - 2016-06-22 - v0.6.0 Updating all dependencies
  - 2016-06-08 - v0.5.1 Fixes retrieval of many-to-one relationships
  - 2016-04-22 - v0.5.0 Safer error extraction, relationship deduplication bug, adding relationships to new resources
