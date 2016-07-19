@@ -1,3 +1,5 @@
+ - 2016-07-19 - v0.8.0
+ - 2016-07-19 - Enable options in fetch requests
  - 2016-07-13 - v0.7.0
  - 2016-07-12 - Send id and type on PATCH requests
  - 2016-07-12 - Add flow and jscpd to Travis
