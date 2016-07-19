@@ -23,9 +23,10 @@ describe("Testing jsonapi-client", function() {
 
     it("client.fetch", function(done) {
       client.get("people", "d850ea75-4427-4f81-8595-039990aeede5", { }).then(function(person) {
-        return person.fetch("articles");
+        return person.fetch("articles", { include: "photos" });
       }).then(function(articles) {
         assert.ok(articles[0] instanceof Client.Resource);
+        assert.ok(articles[0].photos[0] instanceof Client.Resource);
       }).then(done, done);
     });
 
