@@ -4,8 +4,6 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/3998acb1f4c6433a93a688e9523e37e0)](https://www.codacy.com/app/oliver-rumbelow-github/jsonapi-client)
 [![Dependencies Status](https://david-dm.org/holidayextras/jsonapi-client.svg)](https://david-dm.org/holidayextras/jsonapi-client)
 
-[![Sauce Test Status](https://saucelabs.com/browser-matrix/theninj4.svg)](https://saucelabs.com/u/theninj4)
-
 # jsonapi-client
 
 A javascript module designed to make it really easy to consume a `json:api` service.
