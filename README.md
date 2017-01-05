@@ -10,7 +10,7 @@
 
 A javascript module designed to make it really easy to consume a `json:api` service.
 
-!! *THIS PROJEC IS NOT IN NPM* !!
+!! **THIS PROJECT IS NOT IN NPM** !!
 ```
 $ npm install --save jsonapi-client@holidayextras/jsonapi-client
 ```
