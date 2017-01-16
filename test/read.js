@@ -293,4 +293,18 @@ describe("Testing jsonapi-client", function() {
     });
   });
 
+    describe("Initializes safely", function() {
+      it("accepts options as an optional parameter", function() {
+
+        var auth = {};
+        var options = {
+          cacheDuration: 500
+        };
+        var clientWithOptions = new Client("http://localhost:16006/rest", auth, options);
+        assert.notEqual(clientWithOptions, null);
+
+      });
+    });
+
+
 });
