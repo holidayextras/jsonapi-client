@@ -177,7 +177,7 @@ Resource.prototype._getRaw = function() {
 
 Resource.prototype._getDelta = function() {
   var primaryRelations = { };
-  var relationships = this._getRaw().relationships;
+  var relationships = this._getRaw().relationships || { };
   Object.keys(relationships).forEach(function(i) {
     if (getMeta(relationships[i]).relation === "foreign") return;
     primaryRelations[i] = relationships[i];
@@ -200,7 +200,8 @@ Resource.prototype._getUidString = function() {
 };
 
 Resource.prototype._getPathFor = function(relation) {
-  return this._getRaw().relationships[relation].links.related;
+  var url = this._getRaw().relationships[relation].links.related;
+  return url.href || url;
 };
 
 Resource.prototype._matches = function(other) {
