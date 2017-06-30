@@ -155,6 +155,10 @@ describe("Testing jsonapi-client", function() {
             "id": "d850ea75-4427-4f81-8595-039990aeede5",
             "type": "people"
           },
+          "tags": [
+            "galapagos",
+            "emperor"
+          ],
           "articles": undefined
         });
 
@@ -265,6 +269,10 @@ describe("Testing jsonapi-client", function() {
             "id": "d850ea75-4427-4f81-8595-039990aeede5",
             "type": "people"
           },
+          "tags": [
+            "galapagos",
+            "emperor"
+          ],
           "articles": undefined
         });
 
