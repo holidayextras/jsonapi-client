@@ -63,7 +63,8 @@
     "complexity": "./node_modules/plato/bin/plato -r -d complexity lib",
     "lint": "./node_modules/.bin/eslint ./lib/* ./test/*.js --quiet && echo '✔ All good!'",
     "flow": "node ./node_modules/flow-bin/cli.js && echo '✔ All good!'",
-    "jscpd": "jscpd --blame -p ./lib/ || echo 'Finished!'"
+    "jscpd": "jscpd --blame -p ./lib/ || echo 'Finished!'",
+    "ci": "npm run lint && npm run flow && npm run jscpd && npm run test"
   },
   "config": {
     "blanket": {
