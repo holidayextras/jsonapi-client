@@ -1,6 +1,6 @@
 {
-  "name": "jsonapi-client",
-  "version": "0.8.1",
+  "name": "@holidayextras/jsonapi-client",
+  "version": "1.0.0",
   "description": "A clientside module designed to make it really easy to consume a json:api service.",
   "keywords": [
     "jsonapi",
