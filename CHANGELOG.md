@@ -1,3 +1,5 @@
+ - 2017-07-14 - v1.0.0
+ - 2017-07-14 - Publish to NPM as scoped package `@holidayextras/jsonapi-client`.
  - 2017-07-14 - v0.8.1
  - 2016-07-14 - Test with latest `jsonapi-server` and update dependencies.
  - 2016-07-19 - v0.8.0
