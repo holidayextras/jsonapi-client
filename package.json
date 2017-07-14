@@ -68,7 +68,7 @@
   },
   "config": {
     "blanket": {
-      "pattern": "/jsonapi-client\/lib/",
+      "pattern": "/jsonapi-client/lib/",
       "data-cover-never": [
         "node_modules",
         "test",
