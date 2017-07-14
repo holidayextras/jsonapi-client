@@ -29,7 +29,7 @@
     "flow-bin": "^0.28.0",
     "jscpd": "^0.6.1",
     "eslint-config-eslint": "3.0.0",
-    "jsonapi-server": "3.0.0",
+    "jsonapi-server": "3.0.1",
     "karma": "1.1.0",
     "karma-chrome-launcher": "1.0.1",
     "karma-firefox-launcher": "1.0.0",
