@@ -1,17 +1,13 @@
 language: node_js
 node_js:
-  - "4.2.6"
-script: "npm run $TEST_STEP"
+  - 4
+  - 6
+  - 7
 addons:
   firefox: "latest"
-env:
-  matrix:
-    - TEST_STEP=jscpd
-    - TEST_STEP=lint
-    - TEST_STEP=test
-    - TEST_STEP=flow
-notifications:
-  email: false
 before_script:
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
+script: npm run ci
+notifications:
+  email: false

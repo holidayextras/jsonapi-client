@@ -13,6 +13,8 @@ A javascript module designed to make it really easy to consume a `json:api` serv
 $ npm install --save jsonapi-client@holidayextras/jsonapi-client
 ```
 
+note: this project requires a Node.js version of at least `4.5.0`.
+
 ### Motivation / Justification / Rationale
 
 Consuming a json:api service from within Javascript is a non-trivial affair. Setting up a transport mechanism, authentication, making requests to standardised HTTP routes, error handling, pagination and expanding an inclusion tree... All of these things represent barriers to consuming an API. This module takes away all the hassle and lets developers focus on interacting with a rich API without wasting developer time focusing on anything other than shipping valuable features.

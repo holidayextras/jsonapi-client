@@ -29,7 +29,7 @@
     "flow-bin": "^0.28.0",
     "jscpd": "^0.6.1",
     "eslint-config-eslint": "3.0.0",
-    "jsonapi-server": "1.15.4",
+    "jsonapi-server": "3.0.1",
     "karma": "1.1.0",
     "karma-chrome-launcher": "1.0.1",
     "karma-firefox-launcher": "1.0.0",
@@ -42,6 +42,9 @@
     "phantomjs": "2.1.7",
     "plato": "1.5.0",
     "uglifyjs": "2.4.10"
+  },
+  "engines": {
+    "node": ">=4.5"
   },
   "scripts": {
     "build": "mkdir -p dist && ./node_modules/.bin/browserify lib/Client.js | ./node_modules/.bin/uglifyjs -cm -o dist/jsonapi-client.min.js 2> /dev/null && echo '✔ Assets built!'",
@@ -60,7 +63,8 @@
     "complexity": "./node_modules/plato/bin/plato -r -d complexity lib",
     "lint": "./node_modules/.bin/eslint ./lib/* ./test/*.js --quiet && echo '✔ All good!'",
     "flow": "node ./node_modules/flow-bin/cli.js && echo '✔ All good!'",
-    "jscpd": "jscpd --blame -p ./lib/ || echo 'Finished!'"
+    "jscpd": "jscpd --blame -p ./lib/ || echo 'Finished!'",
+    "ci": "npm run lint && npm run flow && npm run jscpd && npm run test"
   },
   "config": {
     "blanket": {
