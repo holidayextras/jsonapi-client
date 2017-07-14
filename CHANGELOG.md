@@ -1,5 +1,5 @@
  - 2017-07-14 - v0.8.1
- - 2016-07-14 - Test with latest `jsonapi-server` android update dependencies.
+ - 2016-07-14 - Test with latest `jsonapi-server` and update dependencies.
  - 2016-07-19 - v0.8.0
  - 2016-07-19 - Enable options in fetch requests
  - 2016-07-13 - v0.7.0
