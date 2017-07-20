@@ -8,9 +8,10 @@
 
 A javascript module designed to make it really easy to consume a `json:api` service.
 
-!! **THIS PROJECT IS NOT IN NPM** !!
+** ⚠ !! THIS PROJECT IS IN NPM AS `@holidayextras/jsonapi-client` !! **
+
 ```
-$ npm install --save jsonapi-client@holidayextras/jsonapi-client
+$ npm install --save @holidayextras/jsonapi-client
 ```
 
 note: this project requires a Node.js version of at least `4.5.0`.
