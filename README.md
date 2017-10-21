@@ -6,6 +6,8 @@
 
 # jsonapi-client
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/holidayextras/jsonapi-client.svg)](https://greenkeeper.io/)
+
 A javascript module designed to make it really easy to consume a `json:api` service.
 
 ** ⚠ !! THIS PROJECT IS IN NPM AS `@holidayextras/jsonapi-client` !! **
